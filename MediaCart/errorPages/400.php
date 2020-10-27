@@ -31,27 +31,6 @@
     </style>
 </head>
 <body>
-		
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <img class="navbar_pic" src="../images/navbarlogo.png" alt="Your image">
-	  <a class="navbar-brand" href="#">F.Y.P</a>
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggle" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	  </button>
-
-	  <div class="collapse navbar-collapse" id="navbar-toggle">
-		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-		  <li class="nav-item active">
-			<a class="nav-link" href="../welcome.php">Home <span class="sr-only">(current)</span></a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Find Pets!</a>
-		  </li>
-		</ul>
-		
-	
-	  </div>
-	</nav>
     
     <div class="container">
     <div class="row">
@@ -65,7 +44,7 @@
                     Sorry, an error has occured, Requested page not found!
                 </div>
                 <div class="error-actions">
-                    <a href="../welcome.php" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>Take Me Home </a>
+                    <a href="../index.php" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>Take Me Home </a>
                 </div>
             </div>
         </div>
