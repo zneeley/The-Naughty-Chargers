@@ -4,7 +4,7 @@ Custom CSS Stylesheet
 <?php 
 	header("Content-type: text/css; charset: UTF-8");
     // Logic for random background
-    $background = array('backgound1.jpg','backgound2.jpg','backgound3.jpg','backgound4.jpg','backgound5.jpg');
+    $background = array('backgound1.jpg','backgound2.jpg','backgound3.jpg','backgound4.jpg','background5.jpg');
     
     // Get a random number and set background
     $i = rand(0, count($background)-1);

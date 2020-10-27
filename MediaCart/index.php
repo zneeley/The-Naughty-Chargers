@@ -38,7 +38,7 @@
 
   <footer class="mastfoot mt-auto">
     <div class="inner">
-      <p>@2020 MediaCart</p>
+      
     </div>
   </footer>
 </div>
