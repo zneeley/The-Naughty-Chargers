@@ -29,7 +29,6 @@
   </header>
 
   <main role="main" class="inner cover">
-    <h1 class="cover-heading">MediaCart</h1>
     <p class="lead">We make tracking your movie and tv shows easier!</p>
     <p class="lead">
       <button id="register_btn" class="btn btn-lg btn-secondary">Register</button>
@@ -61,7 +60,7 @@
         <h5 class="modal-title col-12 text-secondary">Are you a...</h5>
       </div>
       <div class="modal-body col-12">
-		<a href="registerShelter.php" class="btn btn-primary">Shelter</a>
+		<a href="guest.php" class="btn btn-primary">Guest</a>
 		<a href="register.php" class="btn btn-success">User</a>
       </div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
