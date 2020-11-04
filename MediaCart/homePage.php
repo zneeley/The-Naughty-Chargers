@@ -11,6 +11,34 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+// Get Profile Image
+
+// Prepare a select statement
+$sql = "SELECT profileImage FROM users WHERE userID = ?";
+
+if($stmt = mysqli_prepare($link, $sql)){
+    // Bind variables to the prepared statement as parameters
+    mysqli_stmt_bind_param($stmt, "s", $param_userID);
+    
+    // Set parameters
+    $param_userID = $_SESSION['accountID'];
+    
+    // Attempt to execute the prepared statement
+    if(mysqli_stmt_execute($stmt)){
+        // Store result
+        mysqli_stmt_store_result($stmt);
+        
+        mysqli_stmt_bind_result($stmt, $param_userImage);
+        if(mysqli_stmt_fetch($stmt)){
+            $profileImgDir = base64_decode($param_userImage);
+        }
+    }
+    // Close statement
+    mysqli_stmt_close($stmt);  
+
+mysqli_close($link);    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +75,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <p>
         <a href="passwordReset.php" class="btn btn-warning">Reset Your Password</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+		<br>
+		<br>
+		<img src="<?php echo $profileImgDir; ?>" width="125" height="125">
     </p>
 </body>
 </html>

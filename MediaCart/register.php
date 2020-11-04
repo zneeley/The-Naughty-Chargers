@@ -157,8 +157,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: homePage.php");
+				// Auto Sign in the account if the account was created
+                session_start();
+				
+				// Store data in session variables
+                $_SESSION["loggedin"] = true;
+                $_SESSION["id"] = "";
+                $_SESSION["username"] = $username;
+                $_SESSION["accountID"] = $param_userID;
+                $_SESSION["accountType"] = "user";
+                $_SESSION["accountHolderName"] = $firstName;
+				
+                // Redirect to profile creation page
+                header("location: createProfile.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
