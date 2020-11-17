@@ -64,6 +64,7 @@ mysqli_close($link);
             height: 100%;
             font: 14px sans-serif;
             text-align: center;
+
         }
         h3{ font: sans-serif; }
     </style>
@@ -79,5 +80,42 @@ mysqli_close($link);
 		<br>
 		<img src="<?php echo $profileImgDir; ?>" width="125" height="125">
     </p>
+    <div id="movie-cards" class ="row justify-content-center">
+          
+    </div>
 </body>
 </html>
+
+<script type=text/javascript>
+    $(document).ready(function() {
+        //counts the current list of popular movies
+        var currentPage = 1;
+        
+        populatePage(currentPage);
+        
+        //call populatePage when scrolled to bottom of page
+        $(window).scroll(function(){
+           if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+               currentPage++;
+               populatePage(currentPage);
+           }
+        });
+    });
+    //call the API and append the html of the results
+    function populatePage(currentPage){
+        $.ajax('https://api.themoviedb.org/3/movie/popular?api_key=159d1f93f8f7827f36676bb412e6c3d6&language=en-US&page='+currentPage,   // request url
+    {
+        timeout: 3000,
+        success: function (data, status, xhr) {// success callback function
+            data['results'].forEach(function(item, index){
+                $("#movie-cards").append(
+                  '<div class="card m-4 col-xl-2" style="width: 18rem; height: 33rem">'+
+                    '<div class="card-body">'+
+                      '<img src="https://image.tmdb.org/t/p/original/'+item['poster_path']+'" class="card-img-top" alt="Movie Poster">'+
+                    '</div>'+
+                  '</div>');
+            });
+    }
+});
+    }
+</script>

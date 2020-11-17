@@ -281,3 +281,11 @@ margin-left: 4px;
  .profile_text{
 	 text-align: justify;
  }
+
+/*
+* Homepage background
+*/
+
+.home-background{
+    filter: blur(8px);
+}
