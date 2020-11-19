@@ -230,7 +230,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
-            <p>Don't have an account? <a href="#" id="register_btn">Sign up now.</a></p>
+            <p>Don't have an account? <a href="register.php" id="register_btn">Sign up now.</a></p>
             <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
         </form>
 			</div>
@@ -250,21 +250,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </body>
 
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title col-12 text-secondary">Are you a...</h5>
-      </div>
-      <div class="modal-body text-center col-12">
-		<a href="guest.php" class="btn btn-primary">Guest</a>
-		<a href="register.php" class="btn btn-success">User</a>
-      </div>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-</div>
-
 </html>
 <script>
 	grecaptcha.ready(function () {
@@ -275,8 +260,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			recaptchaResponse.value = token;
 		});
 	});
-	
-	$('#register_btn').on('click',function(){
-		$('#myModal').modal('toggle');
-	});
+
 </script>  
