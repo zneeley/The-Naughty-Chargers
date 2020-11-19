@@ -10,7 +10,7 @@ $reCaptchaVal = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Build POST request:
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    $recaptcha_secret = '6LfUL9wZAAAAACkWlukqlZT4EJPjkEvyOLStuTnk';
+    $recaptcha_secret = '6Lea4-QZAAAAAB6JxoSBkbEf-DOR2vskRBjq59p2';
     $recaptcha_response = $_POST["recaptcha_response"];
 
     // Make and decode POST request:
@@ -218,7 +218,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         .wrapper{ width: 350px; padding: 20px; }
     </style>
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lea4-QZAAAAAGjUjpf0C0xkcMaUbbKwBwA-Thuy"></script>
 </head>
 <body>
     
@@ -280,7 +280,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                          
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('6LfUL9wZAAAAAOgAUxx9kfBt1JoxtRHvrmW6kWrJ', { action: 'register' })
+            grecaptcha.execute('6Lea4-QZAAAAAGjUjpf0C0xkcMaUbbKwBwA-Thuy', { action: 'register' })
                 .then(function (token) {
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
                 console.log(recaptchaResponse);

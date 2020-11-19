@@ -24,7 +24,7 @@ $reCaptchaVal = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Build POST request:
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    $recaptcha_secret = '6Lc7Cb0UAAAAAEYFNQkPzlrav9ZspKcNV4OxR3he';
+    $recaptcha_secret = '6Lea4-QZAAAAAB6JxoSBkbEf-DOR2vskRBjq59p2';
     $recaptcha_response = $_POST["recaptcha_response"];
 
     // Make and decode POST request:
@@ -117,7 +117,7 @@ if(isset($_FILES['image'])) {
 <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lea4-QZAAAAAGjUjpf0C0xkcMaUbbKwBwA-Thuy"></script>
 
     <style type="text/css">
         body{
@@ -148,7 +148,7 @@ if(isset($_FILES['image'])) {
 	</div>
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
+            grecaptcha.execute('6Lea4-QZAAAAAGjUjpf0C0xkcMaUbbKwBwA-Thuy', { action: 'profile' })
                 .then(function (token) {
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
                 console.log(recaptchaResponse);
