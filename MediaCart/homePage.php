@@ -84,13 +84,35 @@ mysqli_close($link);
           
     </div>
 </body>
+<div id="movie-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title col-12 text-secondary"></h3>
+      </div>
+      <div class="modal-body col-12">
+          <h5 class="modal-summary"></h5>
+      </div>
+        <div class="modal-share col-12">
+            <a class="modal-twitter-link">Share on Twitter!</a>
+        </div>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+    
+<!-- include jquery, popper.js, and bootstrap js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
 </html>
 
 <script type=text/javascript>
     $(document).ready(function() {
         //counts the current list of popular movies
         var currentPage = 1;
-        
+
         populatePage(currentPage);
         
         //call populatePage when scrolled to bottom of page
@@ -103,19 +125,34 @@ mysqli_close($link);
     });
     //call the API and append the html of the results
     function populatePage(currentPage){
-        $.ajax('https://api.themoviedb.org/3/movie/popular?api_key=159d1f93f8f7827f36676bb412e6c3d6&language=en-US&page='+currentPage,   // request url
-    {
-        timeout: 3000,
-        success: function (data, status, xhr) {// success callback function
-            data['results'].forEach(function(item, index){
-                $("#movie-cards").append(
-                  '<div class="card m-4 col-xl-2" style="width: 18rem; height: 33rem">'+
-                    '<div class="card-body">'+
-                      '<img src="https://image.tmdb.org/t/p/original/'+item['poster_path']+'" class="card-img-top" alt="Movie Poster">'+
-                    '</div>'+
-                  '</div>');
-            });
+        $.ajax('https://api.themoviedb.org/3/movie/popular?api_key=159d1f93f8f7827f36676bb412e6c3d6&language=en-US&page='+currentPage,{
+            success: function (data, status, xhr) {// success callback function
+                if(status !== "timeout"){
+                    data['results'].forEach(function(item, index){
+                    $("#movie-cards").append(
+                      '<div class="movie-card card m-4 col-l-3" style="width: 18rem; height: 33rem">'+
+                        '<div class="card-body">'+
+                          '<img src="https://image.tmdb.org/t/p/original/'+item['poster_path']+'" class="card-img-top movie-poster" alt="Movie Poster">'+
+                        '</div>'+
+                        '<div class="card-footer">'+
+                          '<h5 class="movie-title card-title">'+item['title']+'</h5>'+
+                        '</div>'+
+                        '<div class="movie-summary" hidden>'+item['overview']+'</div>'+
+                      '</div>');
+                    });
+                }
+            }
+        });
     }
-});
-    }
+    
+    $("#movie-cards").on("click", ".card-body", function(){
+        let title = $(this).siblings().children('.movie-title').html();
+        let summary = $(this).siblings('.movie-summary').html();
+        $('#movie-modal').modal('toggle');
+        $('.modal-title').html(title);
+        $('.modal-summary').html(summary);
+        $('.modal-twitter-link').attr("href", "https://twitter.com/intent/tweet?text=Have you seen "+title+"? It's pretty sick! &hashtags=mediacart");
+        //make it open a new tab
+        $('.modal-twitter-link').attr("target", "_blank");
+    });
 </script>
