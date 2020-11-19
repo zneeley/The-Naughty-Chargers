@@ -31,7 +31,7 @@
   <main role="main" class="inner cover">
     <p class="lead">We make tracking your movie and tv shows easier!</p>
     <p class="lead">
-      <button id="register_btn" class="btn btn-lg btn-secondary">Register</button>
+      <a href="register.php" id="register_btn" class="btn btn-lg btn-secondary">Register</a>
       <a href="login.php" class="btn btn-lg btn-secondary">Login</a>
     </p>
   </main>
@@ -52,29 +52,11 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
    </body>
-    
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title col-12 text-secondary">Are you a...</h5>
-      </div>
-      <div class="modal-body col-12">
-		<a href="guest.php" class="btn btn-primary">Guest</a>
-		<a href="register.php" class="btn btn-success">User</a>
-      </div>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-</div>
 	
 </html>
 <script>
 	$(document).ready(function(){
 		$('.hero-image').animate({ opacity: 1 }, 700)
 	})
-	$('#register_btn').on('click',function(){
-		$('#myModal').modal('toggle');
-	});
 </script>
 
