@@ -289,3 +289,37 @@ margin-left: 4px;
 .home-background{
     filter: blur(8px);
 }
+
+
+/*
+* movie poster fade on hover
+*/
+
+.movie-title{
+  transition: .5s ease;
+  opacity: 0;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(rgba(255,255,255,1), rgba(255,255,255,1), rgba(255,255,255,0));
+  position: absolute;
+}
+
+.movie-img {
+  opacity: 1;
+  transition: .5s ease;
+  max-width:100%;
+  max-height:100%;
+}
+
+.movie-container{
+  position: relative;
+}
+
+.movie-container:hover .movie-img {
+  opacity: 0.3;
+}
+
+.movie-container:hover .movie-title {
+  opacity: 1;
+}
