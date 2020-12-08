@@ -80,21 +80,28 @@ mysqli_close($link);
 		<br>
 		<img src="<?php echo $profileImgDir; ?>" width="125" height="125">
     </p>
+    <form id="search-form">
+      <div class="page-header  justify-content-center row">
+          <input id="search-bar" class="form-control col-md-8" placeholder="search">
+      </div>
+    </form>
     <div id="movie-cards" class ="row justify-content-center">
           
     </div>
 </body>
 <div id="movie-modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title col-12 text-secondary"></h3>
+    <div class="modal-content row">
+      <div class="modal-header col-12">
+        <h3 class="modal-title text-secondary"></h3>
       </div>
       <div class="modal-body col-12">
           <h5 class="modal-summary"></h5>
       </div>
-        <div class="modal-share col-12">
-            <a class="modal-twitter-link">Share on Twitter!</a>
+        <div class="modal-share col-12 row">
+            <a class="modal-twitter-link col-4"><img class="logo" src="images/twitter.png"></a>
+            <a class="modal-facebook-link col-4"><img class="logo" src="images/facebook.jpg"></a>
+            <a class="modal-pinterest-link col-4"><img class="logo" src="images/pinterest.png"></a>
         </div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
@@ -109,17 +116,25 @@ mysqli_close($link);
 </html>
 
 <script type=text/javascript>
+    var usingSearch = false;
+    var currentPage = 1;
     $(document).ready(function() {
         //counts the current list of popular movies
-        var currentPage = 1;
-
-        populatePage(currentPage);
+        populatePage(currentPage);        
         
         //call populatePage when scrolled to bottom of page
         $(window).scroll(function(){
            if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-               currentPage++;
-               populatePage(currentPage);
+             currentPage++;
+             if(usingSearch === true){
+              console.log(currentPage);
+              populatePageSearch(currentPage);
+             }
+             else{
+               console.log(usingSearch);
+              populatePage(currentPage);
+             }
+               
            }
         });
     });
@@ -130,29 +145,71 @@ mysqli_close($link);
                 if(status !== "timeout"){
                     data['results'].forEach(function(item, index){
                     $("#movie-cards").append(
-                      '<div class="movie-card card m-4 col-l-3" style="width: 18rem; height: 33rem">'+
-                        '<div class="card-body">'+
-                          '<img src="https://image.tmdb.org/t/p/original/'+item['poster_path']+'" class="card-img-top movie-poster" alt="Movie Poster">'+
-                        '</div>'+
-                        '<div class="card-footer">'+
-                          '<h5 class="movie-title card-title">'+item['title']+'</h5>'+
-                        '</div>'+
-                        '<div class="movie-summary" hidden>'+item['overview']+'</div>'+
-                      '</div>');
+                        '<div class="movie-container m-4 col-l-3" style="width: 18rem; height: 33rem" >'+
+                          '<img src="https://image.tmdb.org/t/p/original/'+item['poster_path']+'" class="movie-img" alt="Movie Poster">'+
+                          '<div class="movie-title">'+
+                            '<h3 class="text">'+item['title']+'</h5>'+
+                          '<div>'+
+                          '<div class="movie-summary" hidden>'+item['overview']+'</div>'+
+                        '</div>'
+                      );
                     });
                 }
             }
         });
     }
     
-    $("#movie-cards").on("click", ".card-body", function(){
-        let title = $(this).siblings().children('.movie-title').html();
-        let summary = $(this).siblings('.movie-summary').html();
+    //call the API and append the html of the results
+    function populatePageSearch(currentPage){
+        let searchVal = $("#search-bar").val();
+        searchVal = searchVal.replace(" ", "+");
+        $.ajax('https://api.themoviedb.org/3/search/multi?api_key=159d1f93f8f7827f36676bb412e6c3d6&query='+searchVal+'&page='+currentPage,{
+            success: function (data, status, xhr) {// success callback function
+                if(status !== "timeout"){
+                  data['results'].forEach(function(item, index){
+                    //check if img exists
+                    //$.ajax('https://image.tmdb.org/t/p/original/'+item['poster_path'],{
+                    //  success: //display the card
+                      $("#movie-cards").append(
+                          '<div class="movie-container m-4 col-l-3" style="width: 18rem; height: 33rem" >'+
+                            '<img src="https://image.tmdb.org/t/p/original/'+item['poster_path']+'" class="movie-img" alt="Movie Poster">'+
+                            '<div class="movie-title">'+
+                              '<h3 class="text-title">'+item['title']+'</h5>'+
+                            '<div>'+
+                            '<div class="movie-summary" hidden>'+item['overview']+'</div>'+
+                          '</div>'
+                      )
+                    //});
+                  });
+                }
+            }
+        });
+    }
+
+    
+    $("#movie-cards").on("click", ".movie-container", function(){
+        let title = $(this).find('.movie-title').children().html();
+        let summary = $(this).find('.movie-summary').html();
+        let posterPath = $(this).find('.movie-img').attr("src");
         $('#movie-modal').modal('toggle');
         $('.modal-title').html(title);
         $('.modal-summary').html(summary);
         $('.modal-twitter-link').attr("href", "https://twitter.com/intent/tweet?text=Have you seen "+title+"? It's pretty sick! &hashtags=mediacart");
+        $('.modal-facebook-link').attr("href", "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzneeley.com%2FMediaCart%2Flogin.php&quote=Have you seen "+title+"? It's pretty rad!");
+        $('.modal-pinterest-link').attr("href", "https://pinterest.com/pin/create/button/?url=&media="+posterPath+"&description=Have you seen "+title+"? It's mega cool!");
         //make it open a new tab
         $('.modal-twitter-link').attr("target", "_blank");
+        $('.modal-facebook-link').attr("target", "_blank");
+        $('.modal-pinterest-link').attr("target", "_blank");
+
+    });
+    
+    $("#search-form").submit(function(e){
+      e.preventDefault();
+      usingSearch = true;
+      currentPage = 1;
+      $("#movie-cards").empty();
+      populatePageSearch();
+      
     });
 </script>
